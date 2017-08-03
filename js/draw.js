@@ -1,5 +1,5 @@
 import drawType from "./drawType"
-import personal from "./personalDetail"
+import personalDetail from "./personalDetail"
 
 const draw = function(ctx, data) {
     console.log(data.result);
