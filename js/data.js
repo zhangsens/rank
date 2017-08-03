@@ -10,6 +10,7 @@ function data() {
             } else {
                 reject(0);
             }
+            // async = true;
             // xmlHttp.onreadystatechange = function() {
             //     if (xmlHttp.status == 200) {
             //         if (xmlHttp.responseText) {
