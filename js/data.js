@@ -1,13 +1,25 @@
 function data() {
     return (new Promise(
         function(resole, reject) {
-            $.post("/data", [], function(data) {
-                if (data) {
-                    resole(JSON.parse(data));
-                } else {
-                    reject(0)
-                }
-            })
+
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("POST", "/data", false);
+            xmlHttp.send(null);
+            if (xmlHttp.responseText) {
+                resole(JSON.parse(xmlHttp.responseText));
+            } else {
+                reject(0);
+            }
+            // xmlHttp.onreadystatechange = function() {
+            //     if (xmlHttp.status == 200) {
+            //         if (xmlHttp.responseText) {
+            //             resole(xmlHttp.responseText);
+            //         }
+            //     } else {
+            //         reject("connect error");
+            //     }
+            // }
+
         }
     ))
 }

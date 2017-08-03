@@ -8,7 +8,7 @@ var Conponent = React.createClass({
         return (
             <div>
                 <p>rank:</p>
-                <canvas id="cv" width="800" height="800"></canvas>
+                <canvas id="cv" width="800" height="2000"></canvas>
             </div>
         )
     }
@@ -19,8 +19,10 @@ ReactDOM.render(
     document.querySelector("#app")
 );
 
-console.log(cv);
+const ctx = cv.getContext("2d");
 data().then(function(value){
     //这里处理数据
-    draw(cv,value);
+    draw(ctx,value);
+},function(value){
+    console.log(value);
 })
