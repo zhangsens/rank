@@ -1,5 +1,6 @@
 const personal = function(data) {
     this.data = data;
+    console.log(data);
 }
 
 personal.prototype = {
