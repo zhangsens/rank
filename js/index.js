@@ -1,6 +1,6 @@
 // import React from "react"
 // import ReactDOM from "react-dom"
-import {data} from "./data.js"
+import { data } from "./data.js"
 import draw from "./draw.js"
 
 // var Conponent = React.createClass({
@@ -20,13 +20,14 @@ import draw from "./draw.js"
 // );
 const cv = document.createElement("canvas");
 document.querySelector("#app").appendChild(cv);
-cv.width = 1000;
+cv.width = 1400;
 cv.height = 2000;
+cv.style = "position:relative";
 
 const ctx = cv.getContext("2d");
-data().then(function(value){
+data().then(function(value) {
     //这里处理数据
-    new draw(ctx,value);
-},function(value){
+    new draw(ctx, value);
+}, function(value) {
     console.log(value);
 })
