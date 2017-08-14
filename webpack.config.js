@@ -6,14 +6,14 @@ module.exports = {
         path: __dirname + "/js",
         filename: "index.min.js"
     },
-    // plugins: [
-    //     new webpack.optimize.UglifyJsPlugin(),
-    //     new webpack.DefinePlugin({
-    //         'process.env': {
-    //             'NODE_ENV': JSON.stringify('production')
-    //         }
-    //     })
-    // ],
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin(),
+        new webpack.DefinePlugin({
+            'process.env': {
+                'NODE_ENV': JSON.stringify('production')
+            }
+        })
+    ],
     module: {
         rules: [{
             test: /\.js/,

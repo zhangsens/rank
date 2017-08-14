@@ -8,7 +8,7 @@ const draw = function(ctx, data) {
     this.ctx = ctx;
     this.width = this.ctx.canvas.width - 200;
     this.height = this.ctx.canvas.width;
-    this.personalDetail = new personalDetail();;
+    this.personalDetail = new personalDetail();
     this.characters = [];
     console.log(this.data);
 
@@ -126,7 +126,8 @@ draw.prototype = {
         var offsetX = e.offsetX;
         var offsetY = e.offsetY;
         var hide = true;
-        var _post;
+        var character = this.personalDetail.personal;
+        var _post = new Object();
 
         for (let i = 0; i < this.characters.length; i++) {
             if (
@@ -138,22 +139,33 @@ draw.prototype = {
                 hide = false;
                 this.characters[i].fontSize = 15;
                 this.personalDetail.show(e);
-                _post.character_id = this.characters[i].data.character_id;
-                _post.cover = this.characters[i].data.cover;
+                _post.character_id = `${this.characters[i].data.character_id}`;
+                _post.cover = `${this.characters[i].data.cover}`;
 
-                var xmlHttp = new XMLHttpRequest();
-                xmlHttp.open("POST", "/data", true);
-                xmlHttp.send(JSON.stringify(_post));
-                xmlHttp.onreadystatechange = function() {
-                    if (xmlHttp.status == 200) {
-                        if (xmlHttp.responseText) {
-                            var res = JSON.parse(xmlHttp.responseText);
-                            this.personalDetail.personal.querySelector("img").src = res.cover;
+                if (character.dataset.id != _post.character_id) {
+
+                    character.dataset.id = _post.character_id;
+
+                    var xmlHttp = new XMLHttpRequest();
+                    xmlHttp.open("POST", "/imgdata64", true);
+                    xmlHttp.send(JSON.stringify(_post));
+                    xmlHttp.onreadystatechange = function() {
+                        if (xmlHttp.status == 200) {
+                            if (xmlHttp.responseText) {
+                                console.log(typeof xmlHttp.responseText);
+                                var res = JSON.parse(xmlHttp.responseText);
+                                console.log(typeof res);
+                                character.querySelector("img").src = `data:image/gif;base64,${res.cover}`;
+                                character.querySelector("div").innerHTML = `
+                                名字:${this.characters[i].data.chn_name},</br>
+                                得票总数:${this.characters[i].data.ballot_sum},</br>
+                                比率:${this.characters[i].data.ballot_ratio},</br>
+                                性别:${this.characters[i].data.sex == 1?"女":"男"}</br>
+                                `;
+                            }
                         }
-                    } else {
-                        reject("connect error");
-                    }
-                }
+                    }.bind(this);
+                };
 
             } else {
                 this.characters[i].fontSize = 10;
