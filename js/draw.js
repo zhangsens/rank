@@ -8,7 +8,7 @@ const draw = function(ctx, data) {
     this.ctx = ctx;
     this.width = this.ctx.canvas.width - 200;
     this.height = this.ctx.canvas.width;
-    this.personalDetail = new personalDetail(this.data);;
+    this.personalDetail = new personalDetail();;
     this.characters = [];
     console.log(this.data);
 
@@ -125,6 +125,8 @@ draw.prototype = {
 
         var offsetX = e.offsetX;
         var offsetY = e.offsetY;
+        var hide = true;
+        var _post;
 
         for (let i = 0; i < this.characters.length; i++) {
             if (
@@ -133,14 +135,33 @@ draw.prototype = {
                 offsetY > this.characters[i].nY - 10 &&
                 offsetY < this.characters[i].nY
             ) {
-
+                hide = false;
                 this.characters[i].fontSize = 15;
                 this.personalDetail.show(e);
-            } else {
+                _post.character_id = this.characters[i].data.character_id;
+                _post.cover = this.characters[i].data.cover;
 
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.open("POST", "/data", true);
+                xmlHttp.send(JSON.stringify(_post));
+                xmlHttp.onreadystatechange = function() {
+                    if (xmlHttp.status == 200) {
+                        if (xmlHttp.responseText) {
+                            var res = JSON.parse(xmlHttp.responseText);
+                            this.personalDetail.personal.querySelector("img").src = res.cover;
+                        }
+                    } else {
+                        reject("connect error");
+                    }
+                }
+
+            } else {
                 this.characters[i].fontSize = 10;
-                this.personalDetail.hide();
             }
+        }
+
+        if (hide) {
+            this.personalDetail.hide();
         }
     },
     click: function() {}

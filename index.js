@@ -2,7 +2,9 @@ const koa = require("koa");
 const logger = require("koa-logger");
 const static = require("koa-static");
 const router = require('koa-router')();
+const bodyparser = require("koa-body")();
 const path = require("path");
+const http = require("http");
 const fs = require("fs");
 const data = require("./data/data");
 const views = "./views/";
@@ -35,10 +37,38 @@ router.post('/data', async(ctx, next) => {
     }, function(err) {});
 });
 
+router.post("/imgdata64", bodyparser, async(ctx, next) => {
+    ctx.body = JSON.parse(ctx.request.body);
+
+    ctx.response.body = await new Promise(function(resole, reject) {
+        http.get(ctx.body.cover, function(res) {
+            var chunks = [];
+            var size = 0;
+            var data = "";
+            res.on("data", function(chunk) {
+                chunks.push(chunk);
+                size += chunk.length;
+            })
+            res.on("end", function() {
+                data = Buffer.concat(chunks, size);
+                resole({
+                    cover: data.toString("base64"),
+                    character_id: ctx.body.character_id
+                });
+            });
+        });
+
+    }).then(function(value) {
+        return value;
+    }, function(err) {});;
+
+});
+
 router.get("/favicon.ico", async(ctx, next) => {
     return;
 });
 
+//app.use(bodyparser());
 app.use(router.routes());
 
 app.listen(port);

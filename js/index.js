@@ -22,7 +22,8 @@ const cv = document.createElement("canvas");
 document.querySelector("#app").appendChild(cv);
 cv.width = 1400;
 cv.height = 2000;
-cv.style = "position:relative";
+cv.style.cssTest = "position:relative";
+cv.innerText = `您的浏览器暂不支持哦๑乛◡乛๑`;
 
 const ctx = cv.getContext("2d");
 data().then(function(value) {
