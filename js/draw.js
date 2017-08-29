@@ -119,7 +119,7 @@ draw.prototype = {
         new drawType(this.characters, this.ctx)["rectangle"]("ballot_sum", max);
 
 
-        requestAnimationFrame(this.draw.bind(this));
+        //requestAnimationFrame(this.draw.bind(this));
     },
     mousemove: function(e) {
 
@@ -145,16 +145,14 @@ draw.prototype = {
                 if (character.dataset.id != _post.character_id) {
 
                     character.dataset.id = _post.character_id;
-
+                    var ppp = 0
                     var xmlHttp = new XMLHttpRequest();
                     xmlHttp.open("POST", "/imgdata64", true);
                     xmlHttp.send(JSON.stringify(_post));
                     xmlHttp.onreadystatechange = function() {
-                        if (xmlHttp.status == 200) {
+                        if (xmlHttp.status == 200 && xmlHttp.readyState == 4) {
                             if (xmlHttp.responseText) {
-                                console.log(typeof xmlHttp.responseText);
-                                var res = JSON.parse(xmlHttp.responseText);
-                                console.log(typeof res);
+                                var res = JSON.parse(xmlHttp.responseText)
                                 character.querySelector("img").src = `data:image/gif;base64,${res.cover}`;
                                 character.querySelector("div").innerHTML = `
                                 名字:${this.characters[i].data.chn_name},</br>
@@ -175,8 +173,13 @@ draw.prototype = {
         if (hide) {
             this.personalDetail.hide();
         }
+
+        this.draw();
     },
-    click: function() {}
+    click: function() {},
+    string: function(str) {
+        return JSON.parse(str);
+    }
 }
 
 export default draw;

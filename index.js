@@ -52,8 +52,8 @@ router.post("/imgdata64", bodyparser, async(ctx, next) => {
             res.on("end", function() {
                 data = Buffer.concat(chunks, size);
                 var info = new Object();
-                info.cover = data.toString("base64");
                 info.character_id = ctx.body.character_id;
+                info.cover = data.toString("base64");
                 resole(JSON.stringify(info));
             });
         });

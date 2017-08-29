@@ -1,11 +1,12 @@
 {
   "name": "moe",
   "version": "1.0.0",
-  "description": "",
+  "description": ">前言",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "build": "webpack",
+    "build": "cross-env NODE_ENV=production webpack",
+    "dev": "cross-env NODE_ENV=development webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -16,6 +17,7 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-es2016": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "cross-env": "^5.0.5",
     "eslint": "^4.4.1",
     "eslint-loader": "^1.9.0",
     "koa": "^2.3.0",
@@ -26,6 +28,16 @@
     "path": "^0.12.7",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
     "webpack": "^3.5.4"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhangsens/rank.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zhangsens/rank/issues"
+  },
+  "homepage": "https://github.com/zhangsens/rank#readme"
 }

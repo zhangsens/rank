@@ -12,7 +12,7 @@ function data() {
             }
             // async = true;
             // xmlHttp.onreadystatechange = function() {
-            //     if (xmlHttp.status == 200) {
+            //     if (xmlHttp.status == 200 && xmlHttp.readyState == 4) {
             //         if (xmlHttp.responseText) {
             //             resole(xmlHttp.responseText);
             //         }

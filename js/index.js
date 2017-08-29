@@ -1,29 +1,19 @@
-// import React from "react"
-// import ReactDOM from "react-dom"
+import React from "react"
+import ReactDOM from "react-dom"
+import { Broad } from "./broad.js"
+import { PersonalDetail } from "./personal_Detail"
 import { data } from "./data.js"
 import draw from "./draw.js"
 
-// var Conponent = React.createClass({
-//     render : function(){
-//         return (
-//             <div>
-//                 <p>rank:</p>
-//                 <canvas id="cv" width="1000" height="2000"></canvas>
-//             </div>
-//         )
-//     }
-// })
+ReactDOM.render(
+    <Broad></Broad>, 
+    document.querySelector("app-canvas")
+);
 
-// ReactDOM.render(
-//     <Conponent></Conponent>, 
-//     document.querySelector("#app")
-// );
-const cv = document.createElement("canvas");
-document.querySelector("#app").appendChild(cv);
-cv.width = 1400;
-cv.height = 2000;
-cv.style.cssTest = "position:relative";
-cv.innerText = `您的浏览器暂不支持哦๑乛◡乛๑`;
+ReactDOM.render(
+    <PersonalDetail></PersonalDetail>,
+    document.querySelector("app-person")
+)
 
 const ctx = cv.getContext("2d");
 data().then(function(value) {
@@ -31,4 +21,4 @@ data().then(function(value) {
     new draw(ctx, value);
 }, function(value) {
     console.log(value);
-})
+});
